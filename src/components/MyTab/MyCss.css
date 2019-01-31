@@ -1,0 +1,12 @@
+.MyNav {
+  display: flex; /* [1] */
+  flex-wrap: nowrap; /* [1] */
+  overflow-x: auto; /* [1] */
+  -webkit-overflow-scrolling: touch; /* [4] */
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* [5] */
+  scroll-behavior: smooth;
+
+}
+/* [6] */
+.MyNav::-webkit-scrollbar {
+  display: none; }
