@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 
-export const MEDIA_ROOT = 'https://api.pushe.co';
-export const ROOT_URL = 'http://127.0.0.1:8000/api/';
+export const ROOT_URL = 'https://shooka-backend.herokuapp.com/api/';
 
 
 class Api {
