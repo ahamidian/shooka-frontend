@@ -94,7 +94,7 @@ export default class ProfileModal extends Component {
                                     <Form.Input label='Email' type="email" placeholder='Email address'
                                                 value={this.state.email}
                                                 onChange={(event) => this.setState({email: event.target.value})}/>
-                                    <Form.Input label='Phone number' placeholder='LPhone number'
+                                    <Form.Input label='Phone number' placeholder='Phone number'
                                                 value={this.state.phoneNumber}
                                                 onChange={(event) => this.setState({phoneNumber: event.target.value})}/>
                                 </Form.Group>

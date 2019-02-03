@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {Editor} from 'react-draft-wysiwyg';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
 import {convertToRaw, EditorState} from 'draft-js';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -12,7 +13,10 @@ import HorizontalSettingMenu from "./SettingsMenu/HorizontalSettingMenu";
 import MessageCard from "./MessageCard";
 import SplitModal from "./actions/SplitModal";
 import MergeModal from "./actions/MergeModal";
-import {Grid, Dropdown,Button} from "semantic-ui-react"
+import {Grid, Dropdown, Button} from "semantic-ui-react"
+import {Link} from 'react-router-dom'
+import EditableField from "../EditableField";
+
 
 class Ticket extends Component {
     constructor(props) {
@@ -66,13 +70,41 @@ class Ticket extends Component {
     }
 
 
+    // getDirection=(editorState)=>{
+    //     const content = editorState.getCurrentContent();
+    //
+    //     const directionMap =editorState.getDirectionMap();
+    //
+    //     const blocksAsArray = content.getBlocksAsArray();
+    //
+    //
+    //     for (let ii = 0; ii < blocksAsArray.length; ii++) {
+    //         const block = blocksAsArray[ii];
+    //         const key = block.getKey();
+    //
+    //
+    //         console.log(directionMap.get(key));
+    //
+    //     }
+    // }
+
     onReplyClicked = () => {
         this.props.sendReply(this.props.id, {
             agent_sender: null,
             client_sender: null,
             ticket: this.props.ticket.id,
-            content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
+            content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())).toString()
         }, () => this.setState({editorState: EditorState.createEmpty()}));
+    };
+
+    onUserClickHandler = (event, ticket) => {
+        event.stopPropagation();
+        this.props.openTab({
+            type: "user",
+            data: {id: ticket.client.id},
+            title: ticket.client.name,
+            UID: `user/${ticket.client.id}`
+        });
     };
 
     generateTicketCards = () => {
@@ -114,14 +146,16 @@ class Ticket extends Component {
                             <div style={{display: "flex", justifyContent: "space-between"}}>
 
                                 <div style={{padding: "10px"}}>
-                                    <h3>{ticket.title}</h3>
+                                    <EditableField tag="h3" text={ticket.title}/>
 
-                                    <div style={{display: "flex"}}>
-                                        <img className="rounded mr-2" width="25" height="25"
-                                             src={ticket.client.avatar}/>
-                                        <p className="mr-1">{ticket.client.name}</p>
-                                        <p>{ticket.client.email}</p>
-                                    </div>
+                                    <Link to="" onClick={(event) => this.onUserClickHandler(event, ticket)}>
+                                        <div style={{display: "flex"}}>
+                                            <img className="rounded mr-2" width="25" height="25"
+                                                 src={ticket.client.avatar}/>
+                                            <p className="mr-1">{ticket.client.name}</p>
+                                            <p>({ticket.client.email})</p>
+                                        </div>
+                                    </Link>
 
                                 </div>
                                 <div style={{display: "flex", alignItems: "center"}}>
@@ -163,7 +197,6 @@ class Ticket extends Component {
                                                     options: ['bold', 'italic', 'underline', 'strikethrough']
                                                 },
                                             }}
-                                            editorState={this.state.editorState}
                                             onEditorStateChange={(editorState) => this.setState({editorState})}
                                     />
 

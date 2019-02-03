@@ -12,6 +12,7 @@ import {fetchTeams} from "../actions/TeamActions";
 import {fetchTags} from "../actions/TagActions";
 import {fetchAgents} from "../actions/AgentActions";
 import {changeTab, closeTab, openTab} from "../actions/LayoutActions";
+import LoginRequired from "./LoginRequired";
 
 
 class DefaultLayout extends Component {
@@ -50,24 +51,26 @@ class DefaultLayout extends Component {
         let dynamicHeight = 'calc(100vh - 50px)';
 
         return (
-            <Grid columns="equal" style={{margin:"0"}}>
-                <Grid.Row style={{padding:"0"}}>
-                    <Header onMenuTogglerClick={() => this.setState({isSideBarOpen: !this.state.isSideBarOpen})}/>
-                </Grid.Row>
-                <Grid.Row style={{padding:"0"}}>
-                    <ShookaSideBar navigation={navigation} visible={this.state.isSideBarOpen}/>
-                    <div style={{
-                        marginLeft: this.state.isSideBarOpen ? "55px" : "0px",
-                        height: dynamicHeight,
-                        width:"100%"
-                    }}
-                         className="shooka-pusher">
+            <LoginRequired>
+                <Grid columns="equal" style={{margin: "0"}}>
+                    <Grid.Row style={{padding: "0"}}>
+                        <Header onMenuTogglerClick={() => this.setState({isSideBarOpen: !this.state.isSideBarOpen})}/>
+                    </Grid.Row>
+                    <Grid.Row style={{padding: "0"}}>
+                        <ShookaSideBar navigation={navigation} visible={this.state.isSideBarOpen}/>
+                        <div style={{
+                            marginLeft: this.state.isSideBarOpen ? "55px" : "0px",
+                            height: dynamicHeight,
+                            width: "100%"
+                        }}
+                             className="shooka-pusher">
 
-                        {this.renderMain()}
+                            {this.renderMain()}
 
-                    </div>
-                </Grid.Row>
-            </Grid>
+                        </div>
+                    </Grid.Row>
+                </Grid>
+            </LoginRequired>
 
         );
     }

@@ -124,7 +124,7 @@ class MessageCard extends Component {
         return (
             <div style={{padding: '10px'}}>
                 <div
-                    dangerouslySetInnerHTML={{__html: stateToHTML(convertFromRaw(JSON.parse(this.props.message.content)))}}/>
+                    dangerouslySetInnerHTML={{__html:this.props.message.content}}/>
             </div>
         )
     };

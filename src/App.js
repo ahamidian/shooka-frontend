@@ -11,6 +11,7 @@ import {persistStore, persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import {PersistGate} from 'redux-persist/integration/react'
 import Login from './pages/Login/Login'
+import TicketForm from "./pages/TicketForm/TicketForm";
 const persistConfig = {
     key: 'root',
     storage,
@@ -30,6 +31,7 @@ class App extends Component {
                     <BrowserRouter>
                         <Switch>
                             <Route exact path="/login" name="Login Page" component={Login}/>
+                            <Route exact path="/ticket-form" name="Login Page" component={TicketForm}/>
                             <Route path="/" name="Home" component={DefaultLayout}/>
                         </Switch>
                     </BrowserRouter>

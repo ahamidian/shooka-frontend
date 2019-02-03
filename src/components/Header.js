@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
-import {Menu, Image,Dropdown,Icon} from 'semantic-ui-react'
+import {Menu, Image, Dropdown, Icon} from 'semantic-ui-react'
 import HeaderTabs from "./MyTab/HeaderTabs";
 import ProfileModal from "./Profile/ProfileModal";
 import {connect} from "react-redux";
+import {openTab} from "../actions/LayoutActions";
+import {loadTickets} from "../actions/TicketActions";
+import {bindActionCreators} from "redux";
 
 class Header extends Component {
 
-    logout=()=>{
+    logout = () => {
         localStorage.removeItem("access");
         window.location.reload();
     };
+
     render() {
         return (
             <Menu style={{
@@ -23,18 +27,23 @@ class Header extends Component {
 
                 <HeaderTabs/>
 
-                {/*<div onClick={this.props.onMenuTogglerClick} style={{display: "flex", alignItems: "center",paddingLeft:"10px"}}>*/}
-                {/*<Icon name='add' color="grey"/>*/}
-                {/*<p >new</p>*/}
-                {/*</div>*/}
+                <div onClick={() => this.props.openTab({
+                    type: "newTicket",
+                    title: "new ticket",
+                    UID: `newTicket`
+                })} style={{display: "flex", alignItems: "center", paddingLeft: "10px"}}>
+                    <Icon name='add' color="grey"/>
+                    <p>new</p>
+                </div>
 
 
                 <Menu.Menu position='right'>
 
-                    <Dropdown trigger={ <Image src={(this.props.user).avatar} alt={(this.props.user).name} avatar />} icon={null} className='link item' direction='left'>
+                    <Dropdown trigger={<Image src={(this.props.user).avatar} alt={(this.props.user).name} avatar/>}
+                              icon={null} className='link item' direction='left'>
                         <Dropdown.Menu>
-                            <Dropdown.Header  content='Account' />
-                            <Dropdown.Divider />
+                            <Dropdown.Header content='Account'/>
+                            <Dropdown.Divider/>
                             <ProfileModal user={this.props.user}/>
                             <Dropdown.Item icon='lock' onClick={this.logout}>Logout</Dropdown.Item>
                         </Dropdown.Menu>
@@ -54,5 +63,9 @@ const mapStateToProps = ({user}) => {
     };
 };
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({openTab, loadTickets}, dispatch);
+}
 
-export default connect(mapStateToProps)(Header);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

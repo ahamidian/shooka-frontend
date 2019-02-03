@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "draft-js": "^0.10.5",
     "draft-js-export-html": "^1.2.0",
+    "draftjs-to-html": "^0.8.4",
     "material-ui-search-bar": "^0.4.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

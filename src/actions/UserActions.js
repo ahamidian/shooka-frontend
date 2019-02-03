@@ -65,3 +65,5 @@ export function agentRegister(invitation_key, password, onSuccess, onFailure) {
       });
   }
 }
+
+

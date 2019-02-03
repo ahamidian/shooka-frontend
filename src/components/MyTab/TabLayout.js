@@ -7,6 +7,7 @@ import Tab from "./Tab";
 import Ticket2 from "../Tickets/Ticket2";
 import Tickets2 from "../Tickets/Tickets2";
 import User2 from "../Users/User2";
+import NewTicket from "../Tickets/NewTicket";
 
 class TabLayout extends Component {
   constructor(props) {
@@ -71,6 +72,9 @@ class TabLayout extends Component {
     }
     else if (tab.type === "ticketList") {
       return <Tickets2 query={tab.data.query}/>
+    }
+    else if (tab.type === "newTicket") {
+        return <NewTicket/>
     }
 
   };
