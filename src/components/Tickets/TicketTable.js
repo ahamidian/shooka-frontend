@@ -7,7 +7,7 @@ import {openTab} from "../../actions/LayoutActions";
 import {connect} from "react-redux";
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
-import {loadTickets} from "../../actions/TicketActions";
+import {loadTickets,loadTicketsByFilter} from "../../actions/TicketActions";
 import {getTimeSince} from "../utils";
 import {Link} from 'react-router-dom'
 
@@ -99,24 +99,14 @@ class TicketTableWithoutRouter extends Component {
     };
 
     fetchData = (state, instance) => {
-        console.log(this.props.filter);
-        this.setState({loading: true}, () => {
-            this.props.loadTickets(state.pageSize, state.page, this.props.filter, state.sorted, () => this.setState({loading: false}));
-        });
-
-        // requestData(
-        //   state.pageSize,
-        //   state.page,
-        //   state.sorted,
-        //   state.filtered
-        // ).then(res => {
-        //   // Now just get the rows of data to your React Table (and update anything else like total pages or loading)
-        //   this.setState({
-        //     data: res.rows,
-        //     pages: res.pages,
-        //     loading: false
-        //   });
+        // this.setState({loading: true}, () => {
+        //     this.props.loadTickets(state.pageSize, state.page, this.props.filter, state.sorted, () => this.setState({loading: false}));
         // });
+
+
+        this.setState({loading: true}, () => {
+            this.props.loadTicketsByFilter(state.pageSize, state.page, this.props.filter, state.sorted, () => this.setState({loading: false}));
+        });
     };
 
     render() {
@@ -211,7 +201,7 @@ const mapStateToProps = ({tickets, agents, teams, tags}) => {
 };
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({openTab, loadTickets}, dispatch);
+    return bindActionCreators({openTab, loadTickets,loadTicketsByFilter}, dispatch);
 }
 
 const TicketTable = withRouter(connect(mapStateToProps, mapDispatchToProps)(TicketTableWithoutRouter));

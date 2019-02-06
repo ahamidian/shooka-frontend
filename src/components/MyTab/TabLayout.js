@@ -8,6 +8,7 @@ import Ticket2 from "../Tickets/Ticket2";
 import Tickets2 from "../Tickets/Tickets2";
 import User2 from "../Users/User2";
 import NewTicket from "../Tickets/NewTicket";
+import FilterForm from "../Filters/FilterForm";
 
 class TabLayout extends Component {
   constructor(props) {
@@ -58,6 +59,7 @@ class TabLayout extends Component {
   // };
 
   generateTabContent = () => {
+    // return <FilterForm />
     let tab = this.props.layout.tabs.find((tab) => tab.UID === this.props.layout.activeTab);
 
 

@@ -1,6 +1,7 @@
 import {
   FETCH_TICKETS_SUCCESS,
   FETCH_TICKET_SUCCESS,
+    FETCH_FILTERS_SUCCESS,
   SEND_REPLY,
   CHANGE_SETTINGS
 } from "../actions/TicketActions";
@@ -8,6 +9,7 @@ import _ from 'lodash'
 
 const initialState = {
   tickets: [],
+  filters: [],
   count: 0,
   pages:0,
   detailedTickets: []
@@ -27,6 +29,11 @@ export default function (state = initialState, action) {
         ...state,
         detailedTickets: [...state.detailedTickets.concat(action.payload)],
       };
+    case FETCH_FILTERS_SUCCESS:
+        return {
+            ...state,
+            filters: action.payload,
+        };
     case SEND_REPLY:
       let changedTicket=state.detailedTickets.find((ticket)=>ticket.id===action.payload.ticket);
       changedTicket.messages=[...changedTicket.messages,action.payload];
