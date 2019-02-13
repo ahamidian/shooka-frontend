@@ -21,15 +21,15 @@ class TabLayout extends Component {
 
   }
 
-  componentDidMount() {
+  // componentDidMount() {
     // this.myRef.current.addEventListener('scroll', (event) => {
     //   this.setState({
     //     scrollLeft: this.myRef.current.scrollLeft > 0,
     //     scrollRight: this.myRef.current.offsetWidth + this.myRef.current.scrollLeft < this.myRef.current.scrollWidth
     //   });
     // });
-
-  }
+  //
+  // }
 
   // toggle = (tab) => {
   //   if (this.props.layout.activeTab !== tab.UID) {
@@ -59,7 +59,7 @@ class TabLayout extends Component {
   // };
 
   generateTabContent = () => {
-    // return <FilterForm />
+    // return <FilterForm />;
     let tab = this.props.layout.tabs.find((tab) => tab.UID === this.props.layout.activeTab);
 
 
@@ -72,7 +72,7 @@ class TabLayout extends Component {
     else if (tab.type === "user") {
       return <User2 id={tab.data.id}/>
     }
-    else if (tab.type === "ticketList") {
+    else if (tab.type === "tickets") {
       return <Tickets2 query={tab.data.query}/>
     }
     else if (tab.type === "newTicket") {

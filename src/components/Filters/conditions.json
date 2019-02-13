@@ -2,47 +2,92 @@
   {
     "label": "Status",
     "value": "status",
-    "operations": ["is","is not"]
+    "operations": [
+      "is",
+      "is not"
+    ],
+    "value_type": "int",
+    "value_choices":"status"
   },
   {
     "label": "Title",
     "value": "title",
-    "operations": ["is","is not","contains","not contains"]
+    "operations": [
+      "is",
+      "is not",
+      "contains",
+      "not contains"
+    ]
   },
   {
     "label": "Priority",
     "value": "priority",
-    "operations": ["is","is not","less than","greater than"]
+    "operations": [
+      "is",
+      "is not",
+      "less than",
+      "greater than"
+    ],
+    "value_type": "int",
+    "value_choices":"priority"
   },
   {
     "label": "Assigned team",
     "value": "assigned_team",
-    "operations": ["is","is not"]
+    "operations": [
+      "is",
+      "is not"
+    ],
+    "value_type": "int",
+    "value_choices":"team"
   },
   {
     "label": "Assigned agent",
     "value": "Assigned_to",
-    "operations": ["is","is not"]
+    "operations": [
+      "is",
+      "is not"
+    ],
+    "value_type": "int",
+    "value_choices":"agent"
   },
   {
     "label": "Followers",
     "value": "followers",
-    "operations": ["include","not include"]
+    "operations": [
+      "include",
+      "not include"
+    ],
+    "value_type": "int",
+    "value_choices":"agent"
   },
   {
     "label": "Received at",
     "value": "received_at",
-    "operations": ["is","is not"]
+    "operations": [
+      "is",
+      "is not"
+    ]
   },
   {
     "label": "Requester.email",
     "value": "client.email",
-    "operations": ["is","is not","contains","not contains"]
+    "operations": [
+      "is",
+      "is not",
+      "contains",
+      "not contains"
+    ]
   },
   {
     "label": "Requester.name",
     "value": "client.name",
-    "operations": ["is","is not","contains","not contains"]
+    "operations": [
+      "is",
+      "is not",
+      "contains",
+      "not contains"
+    ]
   }
 ]
 

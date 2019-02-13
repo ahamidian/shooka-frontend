@@ -6,6 +6,7 @@ import Select, {components} from 'react-select';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {changeSettings, sendReply} from "../../../actions/TicketActions";
+import {getAgentOptions, getPriorityOptions, getStatusOptions, getTagOptions, getTeamOptions} from "../../utils";
 
 const {Option} = components;
 
@@ -15,16 +16,16 @@ class TicketSettingMenu extends Component {
     super(props);
     this.state = {
       ticket: null,
-      agentOptions: [{value: null, label: "Unassigned"}],
-      teamOptions: [{value: null, label: "Unassigned"}],
-      tagOptions: [],
-      statuses: [{value: 0, label: "Awaiting User"}, {value: 1, label: "Awaiting Agent"}, {
-        value: 2,
-        label: "Resolved"
-      }],
-      priorities: [{value: 1, label: "1"}, {value: 2, label: "2"}, {value: 3, label: "3"}, {value: 4, label: "4"},
-        {value: 5, label: "5"}, {value: 6, label: "6"}, {value: 7, label: "7"}, {value: 8, label: "8"},
-        {value: 9, label: "9"}, {value: 10, label: "10"}],
+        agentOptions: [{value: null, label: "Unassigned"}],
+        teamOptions: [{value: null, label: "Unassigned"}],
+        tagOptions: [],
+        statuses: [{value: 0, label: "Awaiting User"}, {value: 1, label: "Awaiting Agent"}, {
+            value: 2,
+            label: "Resolved"
+        }],
+        priorities: [{value: 1, label: "1"}, {value: 2, label: "2"}, {value: 3, label: "3"}, {value: 4, label: "4"},
+            {value: 5, label: "5"}, {value: 6, label: "6"}, {value: 7, label: "7"}, {value: 8, label: "8"},
+            {value: 9, label: "9"}, {value: 10, label: "10"}],
       selectedOptions: {
         agent: {value: null, label: "Unassigned"},
         team: {value: null, label: "Unassigned"},
@@ -37,17 +38,12 @@ class TicketSettingMenu extends Component {
   };
 
   componentDidMount() {
-    let options = this.state.agentOptions;
-    this.props.agents.map(agent => options.push({value: agent.id, label: agent.name, image: agent.avatar}));
-    this.setState({agentOptions: options});
+      this.setState({agentOptions: getAgentOptions(this.props.agents,[{value: null, label: "Unassigned"}])});
+      this.setState({teamOptions: getTeamOptions(this.props.teams,[{value: null, label: "Unassigned"}])});
+      this.setState({tagOptions: getTagOptions(this.props.tags,[])});
+      this.setState({statuses: getStatusOptions()});
+      this.setState({priorities: getPriorityOptions()});
 
-    options = this.state.teamOptions;
-    this.props.teams.map(team => options.push({value: team.id, label: team.name}));
-    this.setState({teamOptions: options});
-
-    options = this.state.tagOptions;
-    this.props.tags.map(tag => options.push({value: tag.id, label: tag.name}));
-    this.setState({tagOptions: options});
 
     let agent;
     if (this.props.ticket.assigned_to !== null) {

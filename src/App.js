@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch} from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 import './App.css';
 import DefaultLayout from "./components/DefaultLayout.js";
@@ -12,6 +12,9 @@ import storage from 'redux-persist/lib/storage'
 import {PersistGate} from 'redux-persist/integration/react'
 import Login from './pages/Login/Login'
 import TicketForm from "./pages/TicketForm/TicketForm";
+import history from "./history"
+
+
 const persistConfig = {
     key: 'root',
     storage,
@@ -28,13 +31,13 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <BrowserRouter>
+                    <Router history={history}>
                         <Switch>
                             <Route exact path="/login" name="Login Page" component={Login}/>
                             <Route exact path="/ticket-form" name="Login Page" component={TicketForm}/>
                             <Route path="/" name="Home" component={DefaultLayout}/>
                         </Switch>
-                    </BrowserRouter>
+                    </Router>
                 </PersistGate>
             </Provider>
         );

@@ -6,6 +6,7 @@ import Select, {components} from 'react-select';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {changeSettings, sendReply} from "../../../actions/TicketActions";
+import {getAgentOptions, getPriorityOptions, getStatusOptions, getTagOptions, getTeamOptions} from "../../utils";
 
 const {Option} = components;
 
@@ -16,6 +17,7 @@ class TicketSettingMenu extends Component {
     this.state = {
       ticket: null,
       agentOptions: [{value: null, label: "Unassigned"}],
+      followerOptions: [],
       teamOptions: [{value: null, label: "Unassigned"}],
       tagOptions: [],
       statuses: [{value: 0, label: "Awaiting User"}, {value: 1, label: "Awaiting Agent"}, {
@@ -30,27 +32,20 @@ class TicketSettingMenu extends Component {
         team: {value: null, label: "Unassigned"},
         status: {value: 0, label: "Awaiting User"},
         priority: {value: 1, label: "1"},
-        tags: []
+        tags: [],
+        followers: []
       },
 
     }
   };
 
   componentDidMount() {
-    let options = this.state.agentOptions;
-    this.props.agents.map(agent => options.push({value: agent.id, label: agent.name, image: agent.avatar}));
-    this.setState({agentOptions: options});
-
-    options = this.state.teamOptions;
-    this.props.teams.map(team => options.push({value: team.id, label: team.name}));
-    this.setState({teamOptions: options});
-
-    options = this.state.tagOptions;
-    this.props.tags.map(tag => options.push({value: tag.id, label: tag.name}));
-    this.setState({tagOptions: options});
-
-    console.log(this.state.agentOptions);
-    console.log(this.props.ticket);
+      this.setState({agentOptions: getAgentOptions(this.props.agents,[{value: null, label: "Unassigned"}])});
+      this.setState({teamOptions: getTeamOptions(this.props.teams,[{value: null, label: "Unassigned"}])});
+      this.setState({tagOptions: getTagOptions(this.props.tags,[])});
+      this.setState({statuses: getStatusOptions()});
+      this.setState({priorities: getPriorityOptions()});
+      this.setState({followerOptions: getAgentOptions(this.props.agents,[])});
     let agent;
     if (this.props.ticket.assigned_to !== null) {
       agent = this.state.agentOptions.find((agent) => agent.value === this.props.ticket.assigned_to.id);
@@ -70,7 +65,10 @@ class TicketSettingMenu extends Component {
     let tags = [];
     this.props.ticket.tags.map((ticketTags) => tags.push(this.state.tagOptions.find((tag) => tag.value === ticketTags)));
 
-    this.setState({selectedOptions: {agent, team, status, priority, tags}});
+    let followers = [];
+    this.props.ticket.followers.map((ticketFollowers) => followers.push(this.state.followerOptions.find((follower) => follower.value === ticketFollowers)));
+
+    this.setState({selectedOptions: {agent, team, status, priority, tags, followers}});
 
   }
 
@@ -105,7 +103,10 @@ class TicketSettingMenu extends Component {
     console.log(`Option selected:`, selectedOption);
     this.setState({selectedOptions: {...this.state.selectedOptions, tags: selectedOption}});
   };
-
+  handleFollowerSelectChange = (selectedOption) => {
+      console.log(`Option selected:`, selectedOption);
+      this.setState({selectedOptions: {...this.state.selectedOptions, followers: selectedOption}});
+  };
   onSaveChangesClicked = () => {
     let selectedTagsIdArray = [];
     this.state.selectedOptions.tags.map((option) => selectedTagsIdArray.push(option.value));
@@ -163,8 +164,13 @@ class TicketSettingMenu extends Component {
                 />
               </div>
               <div>
-                <label htmlFor="priority-select">follow</label>
-                <input name="follow" type="checkbox"/>
+                <label htmlFor="follower-select">follow</label>
+                  <Select
+                      value={this.state.selectedOptions.followers}
+                      onChange={this.handleFollowerSelectChange}
+                      options={this.state.followerOptions}
+                      isMulti
+                  />
               </div>
               <div>
                 <label htmlFor="tags-select">tags</label>

@@ -7,7 +7,7 @@ import {openTab} from "../../actions/LayoutActions";
 import {connect} from "react-redux";
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
-import {loadTickets,loadTicketsByFilter} from "../../actions/TicketActions";
+import {loadTickets, loadTicketsByFilter} from "../../actions/TicketActions";
 import {getTimeSince} from "../utils";
 import {Link} from 'react-router-dom'
 
@@ -28,8 +28,6 @@ class TicketTableWithoutRouter extends Component {
                 return agent.name
             }
         }
-        ;
-
         return "Unassigned";
     };
     getClient = (ticket) => {
@@ -56,7 +54,7 @@ class TicketTableWithoutRouter extends Component {
 
     };
 
-    getStatus(ticket) {
+    getStatus = (ticket) => {
         let {status, priority} = ticket;
         let text;
         if (status === 0) {
@@ -67,7 +65,7 @@ class TicketTableWithoutRouter extends Component {
             text = `Resolved | ${priority}`
         }
         return <p style={{marginBottom: "0"}}>{text}</p>
-    }
+    };
 
     onClickHandler = (ticket) => {
         this.props.openTab({
@@ -201,7 +199,7 @@ const mapStateToProps = ({tickets, agents, teams, tags}) => {
 };
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({openTab, loadTickets,loadTicketsByFilter}, dispatch);
+    return bindActionCreators({openTab, loadTickets, loadTicketsByFilter}, dispatch);
 }
 
 const TicketTable = withRouter(connect(mapStateToProps, mapDispatchToProps)(TicketTableWithoutRouter));

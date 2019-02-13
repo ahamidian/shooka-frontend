@@ -29,86 +29,86 @@ class Tickets extends Component {
         }
     }
 
-    componentDidMount() {
-        if (this.props.query.indexOf("ordering") !== -1) {
-            let ordering = this.props.query.substring(this.props.query.indexOf("ordering") + 9);
-            this.setState({orderBy: orderByOptions.find(option => option.value === ordering)})
-        }
-        this.fetchData(this.props.query)
-    }
-
-    componentDidUpdate(prevProps) {
-        let oldId = prevProps.query;
-        let newId = this.props.query;
-        if (newId !== oldId)
-            this.fetchData(this.props.query)
-    }
-
-    fetchData = (query) => {
-        let webQuery = "";
-        if (query) {
-            webQuery = "?" + query;
-        }
-        // this.props.loadTickets(webQuery)
-
-    };
-
-    generateTicketCards = () => {
-        return this.props.tickets.map(ticket => <TicketCard ticket={ticket} key={ticket.id}/>)
-    };
-
-    handleOrderBySelectChange = (selectedOption) => {
-        this.setState({orderBy: selectedOption});
-        const query = this.props.query;
-
-        let filterQuery = "";
-        if (query) {
-            if (query.indexOf("&ordering") !== -1) {
-                filterQuery = query.substring(0, query.indexOf("&ordering"));
-            } else if (query.indexOf("ordering") !== -1) {
-                filterQuery = query.substring(0, query.indexOf("ordering"));
-            } else {
-                filterQuery = query;
-            }
-        }
-        if (filterQuery.length > 0) {
-            filterQuery = filterQuery + "&"
-        }
-
-        this.props.openTab({
-            type: "ticketList",
-            data: {query: `${filterQuery}ordering=${selectedOption.value}`},
-            title: "tickets",
-            UID: `ticketList`
-        });
-    };
-
-    getAgent = (ticket) => {
-        return ticket.assigned_to ? this.props.agents.find((agent) => agent.id === ticket.assigned_to).name : "Unassigned";
-    };
-
-    getTeam = (ticket) => {
-        return ticket.assigned_team ? this.props.teams.find((team) => team.id === ticket.assigned_team).name : "Unassigned";
-    };
-
-    getImage = () => {
-        return <img className="rounded-circle" width="50" height="50"
-                    src={this.props.ticket.client.avatar}
-                    style={{margin: "auto"}}/>
-
-    };
-
-    renderStatus() {
-        let {status, priority} = this.props.ticket;
-        if (status === 0) {
-            return <p>Awaiting User | {priority}</p>
-        } else if (status === 1) {
-            return <p>Awaiting Agent | {priority}</p>
-        } else if (status === 2) {
-            return <p>Resolved | {priority}</p>
-        }
-    }
-
+    // componentDidMount() {
+    //     if (this.props.query.indexOf("ordering") !== -1) {
+    //         let ordering = this.props.query.substring(this.props.query.indexOf("ordering") + 9);
+    //         this.setState({orderBy: orderByOptions.find(option => option.value === ordering)})
+    //     }
+    //     this.fetchData(this.props.query)
+    // }
+    //
+    // componentDidUpdate(prevProps) {
+    //     let oldId = prevProps.query;
+    //     let newId = this.props.query;
+    //     if (newId !== oldId)
+    //         this.fetchData(this.props.query)
+    // }
+    //
+    // fetchData = (query) => {
+    //     let webQuery = "";
+    //     if (query) {
+    //         webQuery = "?" + query;
+    //     }
+    //     // this.props.loadTickets(webQuery)
+    //
+    // };
+    //
+    // generateTicketCards = () => {
+    //     return this.props.tickets.map(ticket => <TicketCard ticket={ticket} key={ticket.id}/>)
+    // };
+    //
+    // handleOrderBySelectChange = (selectedOption) => {
+    //     this.setState({orderBy: selectedOption});
+    //     const query = this.props.query;
+    //
+    //     let filterQuery = "";
+    //     if (query) {
+    //         if (query.indexOf("&ordering") !== -1) {
+    //             filterQuery = query.substring(0, query.indexOf("&ordering"));
+    //         } else if (query.indexOf("ordering") !== -1) {
+    //             filterQuery = query.substring(0, query.indexOf("ordering"));
+    //         } else {
+    //             filterQuery = query;
+    //         }
+    //     }
+    //     if (filterQuery.length > 0) {
+    //         filterQuery = filterQuery + "&"
+    //     }
+    //
+    //     this.props.openTab({
+    //         type: "ticketList",
+    //         data: {query: `${filterQuery}ordering=${selectedOption.value}`},
+    //         title: "tickets",
+    //         UID: `ticketList`
+    //     });
+    // };
+    //
+    // getAgent = (ticket) => {
+    //     return ticket.assigned_to ? this.props.agents.find((agent) => agent.id === ticket.assigned_to).name : "Unassigned";
+    // };
+    //
+    // getTeam = (ticket) => {
+    //     return ticket.assigned_team ? this.props.teams.find((team) => team.id === ticket.assigned_team).name : "Unassigned";
+    // };
+    //
+    // getImage = () => {
+    //     return <img className="rounded-circle" width="50" height="50"
+    //                 src={this.props.ticket.client.avatar}
+    //                 style={{margin: "auto"}}/>
+    //
+    // };
+    //
+    // renderStatus() {
+    //     let {status, priority} = this.props.ticket;
+    //     if (status === 0) {
+    //         return <p>Awaiting User | {priority}</p>
+    //     } else if (status === 1) {
+    //         return <p>Awaiting Agent | {priority}</p>
+    //     } else if (status === 2) {
+    //         return <p>Resolved | {priority}</p>
+    //     }
+    // }
+    //
 
     render() {
         let dynamicHeight = 'calc(100vh - 50px)';

@@ -74,16 +74,6 @@ class TicketFilterMenu extends Component {
         return (
             <div style={{padding: "10px"}}>
                 {this.renderItems()}
-
-                <TicketFilterItem name="My Tickets" link="/tickets/my"
-                                  onClick={() => this.props.onFilterChanged("&my=true")}/>
-                <TicketFilterItem name="Tickets I Follow" link="/tickets/i-follow"
-                                  onClick={() => this.props.onFilterChanged("&i_follow=true")}/>
-                <TicketFilterItem name="My Team's Tickets" link="/ticket/my-team"
-                                  onClick={() => this.props.onFilterChanged("&my_team=true")}/>
-                <TicketFilterItem name="Unassigned Tickets" link="/ticket/unassigned"
-                                  onClick={() => this.props.onFilterChanged("&unassigned=true")}/>
-                <TicketFilterItem name="All Tickets" link="/ticket/all" onClick={() => this.props.onFilterChanged("")}/>
             </div>
         );
     }

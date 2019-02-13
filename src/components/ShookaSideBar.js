@@ -6,7 +6,7 @@ class ShookaSideBar extends Component {
     renderItems = () => {
         return this.props.navigation.items.map((nav) =>
             <Link to={nav.url}>
-                <Menu.Item as='a' active={this.props.location.pathname === nav.url} style={{
+                <Menu.Item as='a' active={this.props.location.pathname.startsWith(nav.url)} style={{
                     minWidth: 0,
                     height: "55px",
                     padding:"0",

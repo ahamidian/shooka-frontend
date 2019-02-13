@@ -56,7 +56,7 @@ export function loadTicketsByFilter( pageSize=100,page=0,filter,sorted=[],onSucc
             sorted.map((sortOption)=>ordering=ordering+(sortOption.desc?"-":"")+sortOption.id)
         }
         console.log(pageSize,page)
-        return getApi().get(`ticket/${filter}/filter?limit=${pageSize}&offset=${pageSize*page}&ordering=${ordering}`, true)
+        return getApi().get(`ticket/${filter}/filter/?limit=${pageSize}&offset=${pageSize*page}&ordering=${ordering}`, true)
             .then(response => {
                 if (onSuccess) {
                     onSuccess(response.data);

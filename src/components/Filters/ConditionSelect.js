@@ -5,6 +5,7 @@ import Select, {components} from 'react-select';
 import conditions from './conditions';
 import {getApi} from "../../api";
 import {LOGIN} from "../../actions/UserActions";
+import {getPriorityOptions, getStatusOptions} from "../utils";
 
 class FilterForm extends Component {
     constructor(props) {
@@ -13,7 +14,8 @@ class FilterForm extends Component {
         this.state = {
             field: null,
             operation: null,
-            value: ""
+            value: "",
+            selected_value: {}
         }
     }
 
@@ -25,24 +27,34 @@ class FilterForm extends Component {
             label: condition.label,
             operations: condition.operations.map((operation) => {
                 return {"value": operation, "label": operation}
-            })
+            }),
+            value_choices:condition.value_choices,
+            value_type:condition.value_type,
         }));
         return options
 
     }
 
     onFieldSelectChange = (selectedOption) => {
-        this.setState({field: selectedOption, operation: null, value: ""});
+        this.setState({field: selectedOption, operation: null, value: "",selected_value:{}});
     };
     onOperationSelectChange = (selectedOption) => {
-        this.setState({operation: selectedOption, value: ""});
+        this.setState({operation: selectedOption, value: "",selected_value:{}});
     };
-
+    onValueSelectChange = (selectedOption) => {
+        this.setState({selected_value: selectedOption},()=> this.props.onChange({
+            field: this.state.field.value,
+            operation: this.state.operation.value,
+            value: this.state.selected_value.value,
+            value_type:this.state.field.value_type
+        }));
+    };
     onValueChange = (value) => {
         this.setState({value}, () => this.props.onChange({
             field: this.state.field.value,
             operation: this.state.operation.value,
-            value: this.state.value
+            value: this.state.value,
+            value_type:this.state.field.value_type
         }));
 
     };
@@ -78,12 +90,34 @@ class FilterForm extends Component {
 
     renderInput() {
         if (this.state.field !== null) {
-            return (
-                <Form.Field>
-                    <input value={this.state.value}
-                           onChange={(event) => this.onValueChange(event.target.value)}/>
-                </Form.Field>
-            )
+            console.log(this.state.field)
+            if(this.state.field.value_choices){
+                let options=[];
+                switch (this.state.field.value_choices) {
+                    case "priority":
+                        options=getPriorityOptions();
+                        break;
+                    case "status":
+                        options=getStatusOptions()
+                }
+                return(
+                    <div style={{width: "200px", marginRight: "10px"}}>
+                        <Select
+                            value={this.state.selected_value}
+                            onChange={this.onValueSelectChange}
+                            options={options}
+                        />
+                    </div>
+                )
+            }
+            else {
+                return (
+                    <Form.Field>
+                        <input value={this.state.value}
+                               onChange={(event) => this.onValueChange(event.target.value)}/>
+                    </Form.Field>
+                )
+            }
         }
     }
 
