@@ -122,7 +122,8 @@ class Ticket extends Component {
                         flexDirection: "column",
                         height: "50px",
                         backgroundColor: "#f4f4f4",
-                        padding: "0"
+                        padding: "0",
+                        borderBottom: "1px solid #cccccc"
                     }}>
                         salam
                     </Grid.Row>
@@ -143,7 +144,7 @@ class Ticket extends Component {
                         }
                         <Grid.Column
                             style={{height: dynamicHeight, overflowY: "auto", padding: "0", backgroundColor: "white"}}>
-                            <div style={{display: "flex", justifyContent: "space-between"}}>
+                            <div style={{display: "flex", justifyContent: "space-between", borderBottom: "1px solid #cccccc"}}>
 
                                 <div style={{padding: "10px"}}>
                                     <EditableField tag="h3" text={ticket.title}/>
@@ -169,7 +170,7 @@ class Ticket extends Component {
                             <HorizontalSettingMenu ticket={ticket}/>
                             }
 
-                            <div style={{display: "flex"}}>
+                            <div style={{display: "flex",padding:"10px 0", borderBottom: "1px solid #cccccc"}}>
                                 {messageCardType !== 1 &&
                                 <img className="rounded" width="35" height="35" src={this.props.user.avatar}
                                      style={{margin: "0 5px"}}/>
@@ -192,10 +193,11 @@ class Ticket extends Component {
                                                 marginBottom: "0"
                                             }}
                                             toolbar={{
-                                                options: ['inline', 'blockType', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image'],
+                                                options: ['inline', 'blockType', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image'],
                                                 inline: {
                                                     options: ['bold', 'italic', 'underline', 'strikethrough']
                                                 },
+                                                link: { inDropdown: true },
                                             }}
                                             onEditorStateChange={(editorState) => this.setState({editorState})}
                                     />
