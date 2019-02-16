@@ -62,7 +62,6 @@ class TabLayout extends Component {
     // return <FilterForm />;
     let tab = this.props.layout.tabs.find((tab) => tab.UID === this.props.layout.activeTab);
 
-
     if (!tab) {
       return;
     }

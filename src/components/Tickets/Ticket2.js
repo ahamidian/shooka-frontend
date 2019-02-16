@@ -13,9 +13,10 @@ import HorizontalSettingMenu from "./SettingsMenu/HorizontalSettingMenu";
 import MessageCard from "./MessageCard";
 import SplitModal from "./actions/SplitModal";
 import MergeModal from "./actions/MergeModal";
-import {Grid, Dropdown, Button} from "semantic-ui-react"
+import {Grid, Dropdown, Button, Image} from "semantic-ui-react"
 import {Link} from 'react-router-dom'
 import EditableField from "../EditableField";
+import mailIcon from '../../Mail.png';
 
 
 class Ticket extends Component {
@@ -125,7 +126,12 @@ class Ticket extends Component {
                         padding: "0",
                         borderBottom: "1px solid #cccccc"
                     }}>
-                        salam
+                        <div style={{display: "flex", alignItems: "center",margin:"auto 10px"}}>
+                            <MergeModal ticket={ticket}/>
+                            <SplitModal ticket={ticket}/>
+                            <Button className="mr-1" style={{width: "80px"}}>delete</Button>
+
+                        </div>
                     </Grid.Row>
                     <Grid.Row style={{margin: "0", padding: "0"}}>
                         {settingsInSide &&
@@ -144,27 +150,22 @@ class Ticket extends Component {
                         }
                         <Grid.Column
                             style={{height: dynamicHeight, overflowY: "auto", padding: "0", backgroundColor: "white"}}>
-                            <div style={{display: "flex", justifyContent: "space-between", borderBottom: "1px solid #cccccc"}}>
+                            <div style={{display: "flex", borderBottom: "1px solid #cccccc" ,marginTop:"10px"}}>
 
-                                <div style={{padding: "10px"}}>
+                                <img src={mailIcon} style={{marginLeft: "10px"}} className="rounded" width="50" height="50"/>
+
+                                <div style={{marginLeft: "10px",marginTop:"5px"}}>
                                     <EditableField tag="h3" text={ticket.title}/>
 
                                     <Link to="" onClick={(event) => this.onUserClickHandler(event, ticket)}>
                                         <div style={{display: "flex"}}>
-                                            <img className="rounded mr-2" width="25" height="25"
-                                                 src={ticket.client.avatar}/>
                                             <p className="mr-1">{ticket.client.name}</p>
                                             <p>({ticket.client.email})</p>
                                         </div>
                                     </Link>
 
                                 </div>
-                                <div style={{display: "flex", alignItems: "center"}}>
-                                    <MergeModal ticket={ticket}/>
-                                    <SplitModal ticket={ticket}/>
-                                    <Button className="mr-1" style={{width: "80px"}}>delete</Button>
 
-                                </div>
                             </div>
                             {!settingsInSide &&
                             <HorizontalSettingMenu ticket={ticket}/>

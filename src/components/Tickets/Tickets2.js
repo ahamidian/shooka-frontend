@@ -112,7 +112,6 @@ class Tickets extends Component {
 
     render() {
         let dynamicHeight = 'calc(100vh - 50px)';
-
         return (
             <Grid className="animated fadeIn" columns='equal' style={{marginLeft: "0",marginTop:"0"}}>
                 <Grid.Row style={{margin: "0", padding: "0"}}>

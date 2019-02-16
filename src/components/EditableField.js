@@ -22,8 +22,11 @@ class EditableField extends React.Component {
     render() {
         if (!this.state.isEditMode) {
             const Tag=this.props.tag;
+            // return (
+            //     <Tag onDoubleClick={() => this.turnEditModeOn()}>{this.props.text}</Tag>
+            // )
             return (
-                <Tag onDoubleClick={() => this.turnEditModeOn()}>{this.props.text}</Tag>
+                <p style={{fontWeight:"600",fontSize: "20px",marginBottom:"5px"}} onDoubleClick={() => this.turnEditModeOn()}>{this.props.text}</p>
             )
         }
         else {
