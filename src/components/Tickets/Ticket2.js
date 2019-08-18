@@ -13,6 +13,7 @@ import HorizontalSettingMenu from "./SettingsMenu/HorizontalSettingMenu";
 import MessageCard from "./MessageCard";
 import SplitModal from "./actions/SplitModal";
 import MergeModal from "./actions/MergeModal";
+import DeleteModal from "./actions/DeleteModal";
 import {Grid, Dropdown, Button, Image} from "semantic-ui-react"
 import {Link} from 'react-router-dom'
 import EditableField from "../EditableField";
@@ -31,7 +32,8 @@ class Ticket extends Component {
             dropDownSelect: "Awaiting User",
             editorState: EditorState.createEmpty(),
             showSplitModal: false,
-            showMergeModal: false
+            showMergeModal: false,
+            showDeleteModal: false
         }
     };
 
@@ -129,7 +131,7 @@ class Ticket extends Component {
                         <div style={{display: "flex", alignItems: "center",margin:"auto 10px"}}>
                             <MergeModal ticket={ticket}/>
                             <SplitModal ticket={ticket}/>
-                            <Button className="mr-1" style={{width: "80px"}}>delete</Button>
+                            <DeleteModal ticket={ticket}/>
 
                         </div>
                     </Grid.Row>
@@ -242,7 +244,7 @@ class Ticket extends Component {
 
     render() {
         let ticket = this.props.ticket;
-        let {showSplitModal, showMergeModal} = this.state;
+        let {showSplitModal, showMergeModal,showDeleteModal} = this.state;
 
         return (
             <Fragment>
@@ -250,7 +252,8 @@ class Ticket extends Component {
                 <SplitModal ticket={ticket} isOpen onClosed={() => this.setState({showSplitModal: false})}/>}
                 {showMergeModal &&
                 <MergeModal ticket={ticket} isOpen onClosed={() => this.setState({showMergeModal: false})}/>}
-
+                {showDeleteModal &&
+                <DeleteModal ticket={ticket} isOpen onClosed={() => this.setState({showDeleteModal: false})}/>}
                 {this.generateTicketCards()}
             </Fragment>
         );

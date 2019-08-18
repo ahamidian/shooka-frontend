@@ -3,7 +3,7 @@ import Header from "./Header";
 import ShookaSideBar from "./ShookaSideBar";
 import {Grid} from "semantic-ui-react";
 import navigation from "../nav"
-import {Switch, Route, Redirect } from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import TabLayout from "./MyTab/TabLayout"
 
 import {bindActionCreators} from "redux";
@@ -28,12 +28,15 @@ class DefaultLayout extends Component {
         this.props.fetchAgents();
         this.props.fetchTeams();
         this.props.fetchTags();
-        this.props.openTab({
-            type: "tickets",
-            data: {query: ``},
-            title: "tickets",
-            UID: `ticketList`
-        });
+        if (this.props.layout.tabs.filter(tab => tab.type === "tickets").length === 0) {
+            this.props.openTab({
+                type: "tickets",
+                data: {filter: 5},
+                title: "tickets",
+                UID: `tickets/filter/5`
+            });
+        }
+
 
     }
 

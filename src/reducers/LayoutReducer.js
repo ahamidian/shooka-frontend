@@ -4,7 +4,8 @@ import {
     TOGGLE_TICKET_SETTING,
     CLOSE_TAB,
     OPEN_TAB,
-    CHANGE_TAB
+    CHANGE_TAB,
+    UPDATE_TAB
 } from "../actions/LayoutActions";
 import _ from 'lodash'
 import history from '../history'
@@ -61,7 +62,7 @@ export default function (state = initialState, action) {
                     newTabs = [...state.tabs.map(tab => tab.UID === action.payload.tab.UID ? action.payload.tab : tab)];
                 }
             }
-            history.push( "/"+action.payload.tab.UID);
+            history.push("/" + action.payload.tab.UID);
             return {
                 ...state,
                 tabs: newTabs,
@@ -79,7 +80,7 @@ export default function (state = initialState, action) {
                     nextActiveTab = state.tabs[currentIndex + 1].UID;
                 }
             }
-            history.push( "/"+nextActiveTab);
+            history.push("/" + nextActiveTab);
             return {
                 ...state,
                 tabs: [...state.tabs.filter(tab => tab.UID !== action.payload.UID)],
@@ -87,10 +88,16 @@ export default function (state = initialState, action) {
             };
 
         case CHANGE_TAB:
-            history.push( "/"+action.payload.UID);
+            history.push("/" + action.payload.UID);
             return {
                 ...state,
                 activeTab: action.payload.UID,
+            };
+        case UPDATE_TAB:
+            return {
+                ...state,
+                tabs: [...state.tabs.map(tab => (tab.UID === action.payload.UID) ? action.payload.tab : tab)],
+                activeTab: (state.activeTab === action.payload.UID) ? action.payload.tab.UID : state.activeTab
             };
 
         default:

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from "redux";
 import {loadTickets} from "../../actions/TicketActions";
-import {openTab} from "../../actions/LayoutActions";
+import {openTab,updateTab} from "../../actions/LayoutActions";
 import {connect} from "react-redux";
 import TicketCard from "./TicketCard";
 import {Grid} from "semantic-ui-react"
@@ -28,7 +28,6 @@ class Tickets extends Component {
             orderBy: {value: "-priority", label: "priority desc"},
         }
     }
-
     // componentDidMount() {
     //     if (this.props.query.indexOf("ordering") !== -1) {
     //         let ordering = this.props.query.substring(this.props.query.indexOf("ordering") + 9);
@@ -109,7 +108,18 @@ class Tickets extends Component {
     //     }
     // }
     //
-
+    onFilterChanged=(filter)=>{
+        this.setState({filter});
+        this.props.updateTab(`tickets/filter/${this.props.filter}`,{
+            type: "tickets",
+            data: {filter: filter},
+            title: "tickets",
+            UID: `tickets/filter/${filter}`
+        });
+    };
+    getFilter=()=>{
+        return this.state.filter || this.props.filter
+    };
     render() {
         let dynamicHeight = 'calc(100vh - 50px)';
         return (
@@ -125,7 +135,7 @@ class Tickets extends Component {
                         maxWidth: "300px",
                         minWidth: "300px"
                     }}>
-                        <TicketFilterMenu id={this.props.id} onFilterChanged={(filter) => this.setState({filter})}/>
+                        <TicketFilterMenu id={this.props.id} onFilterChanged={this.onFilterChanged}/>
                     </Grid.Column>
                     <Grid.Column style={{height: dynamicHeight, overflowY: "auto", padding: "0"}}>
 
@@ -139,7 +149,7 @@ class Tickets extends Component {
                         {/*/></div>*/}
                         {/*</div>*/}
                         {/*{this.generateTicketCards()}*/}
-                        <TicketTable height={dynamicHeight} filter={this.state.filter}/>
+                        <TicketTable height={dynamicHeight} filter={this.getFilter()}/>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
@@ -155,7 +165,7 @@ const mapStateToProps = ({tickets}) => {
 };
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({loadTickets, openTab}, dispatch);
+    return bindActionCreators({loadTickets, openTab,updateTab}, dispatch);
 }
 
 

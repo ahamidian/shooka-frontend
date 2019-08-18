@@ -72,7 +72,7 @@ class TabLayout extends Component {
       return <User2 id={tab.data.id}/>
     }
     else if (tab.type === "tickets") {
-      return <Tickets2 query={tab.data.query}/>
+      return <Tickets2 filter={tab.data.filter}/>
     }
     else if (tab.type === "newTicket") {
         return <NewTicket/>
